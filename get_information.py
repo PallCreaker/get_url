@@ -1,25 +1,9 @@
-# coding: UTF-8
+import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from urllib.parse import urljoin
+from time import sleep
+import pandas as pd
 
-# ブラウザのオプションを格納する変数をもらってきます。
-options = Options()
 
-# Headlessモードを有効にする（コメントアウトするとブラウザが実際に立ち上がります）
-options.set_headless(True)
+comapnies = pd.read_csv('./output/get_company_url.csv')
 
-# ブラウザを起動する
-driver = webdriver.Chrome(chrome_options=options)
-
-# ブラウザでアクセスする
-driver.get("file:///Users/admin/Desktop/index.html")
-
-# HTMLを文字コードをUTF-8に変換してから取得します。
-html = driver.page_source.encode('utf-8')
-
-# BeautifulSoupで扱えるようにパースします
-soup = BeautifulSoup(html, "html.parser")
-
-# idがheikinの要素を表示
-print(soup.select_one("#heikin"))
