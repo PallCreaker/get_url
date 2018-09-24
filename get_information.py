@@ -14,7 +14,7 @@ info_list  = ['創業者', '所在地', 'チーム', '業界', 'チームの強�
 df = pd.DataFrame(columns = intro_list + info_list)
 
 base_url = 'https://creww.me/'
-companies = pd.read_csv('./output/get_company_url_after.csv')
+companies = pd.read_csv('./output/get_company_url.csv')
 
 intro_dict = {}
 info_dict = {}
@@ -22,7 +22,7 @@ info_dict = {}
 for key, row in companies.iterrows():
 
     # sleepを入れる
-    sl_num = random.randint(1, 2)
+    sl_num = random.randint(1, 1)
     sleep(sl_num)
 
     company_url = base_url + row['get_company_url']
