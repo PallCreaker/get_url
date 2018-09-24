@@ -18,9 +18,15 @@ print('extract: ', div.string)
 
 
 ####################### 抽出方法 #######################
+print(soup.div.get("id"))
+# div1
 
-# 複数クラスセレクタ
-soup.findAll('div', class_=['A', 'B'])
+print(soup.p.get("class"))
+# ['p1']
+
+print(soup.a.get("href"))
+# http://zombie-hunting-club.com
+
 
 # 正規表現を使用した抽出
 import re
