@@ -26,14 +26,17 @@ for key, url in companies.iterrows():
     sleep(sl_num)
 
     company_url = base_url + url['get_company_url']
+    # test
+    # company_url = ''
 
     r = requests.get(company_url)
     soup = BeautifulSoup(r.text, 'lxml')
 
     intro_dict['key'] = key
     intro_dict['url'] = company_url
-    intro_dict['会社名_title'] = soup.select('.headline-container span.name')[0].get_text().strip()
-    intro_dict['会社URL'] = soup.select('.headline-container div.profile-website-url')[0].a.get_text().strip()
+    intro_dict['会社名_title'] = soup.select('.headline-container span.name')[0].text.strip()
+    if soup.select('.headline-container div.profile-website-url')[0].a:
+        intro_dict['会社URL'] = soup.select('.headline-container div.profile-website-url')[0].a.text.strip()
 
     for infomation_block in soup.select('.panel.panel-default'):
 
