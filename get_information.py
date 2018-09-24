@@ -21,7 +21,7 @@ intro_dict = {}
     # こんなサポーターを求めています。
 for key, url in companies.iterrows():
     # company_url = base_url + url['get_company_url']
-    company_url = 'https://creww.me/ja/startup/caliljp'
+    company_url = 'https://creww.me/ja/startup/gifee.co'
     # https://creww.me/ja/startup/caliljp
     r = requests.get(company_url)
     soup = BeautifulSoup(r.text, 'lxml')
@@ -52,17 +52,17 @@ for key, url in companies.iterrows():
             elif headline.h2.text == '今やっていること':
                 # 複数のサービスが存在する
                 service = ''
-                for service_block in infomation_block.find_all('div', class_ = 'media-block'):
+                for service_block in infomation_block.find_all('div', class_ = 'media'):
                     service_head = service_block.find('div', class_ = 'media-heading').text.strip()
                     service_body = service_block.p.text.strip()
 
                     # サービスの中にタグが埋め込まれている場合がある
+                    service_tag = ''
                     if service_block.find_all('span'):
-                        service_tag = ''
                         for tags in service_block.find_all('span'):
                             service_tag = service_tag + '[' + tags.a.text + ']'
 
-                    service = service + '\n\n' + service_head + '\n' + service_body + '\n' + service_tag
+                    service = service + ' \n\n ' + service_head + ' \n ' + service_body + ' \n ' + service_tag
                 intro_dict['what'] = service
             elif headline.h2.text == 'こんなサポーターを求めています':
                 intro_dict['supporter'] = infomation_block.find('ul').text
