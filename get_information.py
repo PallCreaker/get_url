@@ -6,9 +6,12 @@ import pandas as pd
 import random
 import re
 
+intro_list = ['key', 'url', '会社名_title','会社URL', '紹介文', 'why', 'how', 'what', 'supporter']
+info_list  = ['創業者', '所在地', 'チーム', '業界', 'チームの強み', 'サービスの形態', 'ローンチ', 'ラウンド', 'ステージ', '資本金', '会社名', '対象地域', '交際ステータス', '職種', '事業規模', '性別', 'その他', '個人年収', '年齢層']
+
 
 # 格納するDFを作成
-df = pd.DataFrame(columns = ['key', 'url', '会社名_title', '紹介文', 'why', 'how', 'what', 'supporter', '創業者', '所在地', 'チーム', '業界', 'チームの強み', 'サービスの形態', 'ローンチ', 'ラウンド', 'ステージ', '資本金', '会社名', '対象地域', '交際ステータス', '職種', '事業規模', '性別', 'その他', '個人年収', '年齢層'])
+df = pd.DataFrame(columns = intro_list + info_list)
 
 base_url = 'https://creww.me/'
 companies = pd.read_csv('./output/get_company_url.csv')
@@ -30,6 +33,7 @@ for key, url in companies.iterrows():
     intro_dict['key'] = key
     intro_dict['url'] = company_url
     intro_dict['会社名_title'] = soup.select('.headline-container span.name')[0].get_text().strip()
+    intro_dict['会社URL'] = soup.select('.headline-container div.profile-website-url')[0].a.get_text().strip()
 
     for infomation_block in soup.select('.panel.panel-default'):
 
@@ -73,7 +77,7 @@ for key, url in companies.iterrows():
             # traceback.print_exc()
             pass
         # 掲載がない場合
-        for key in ['key', 'url', '会社名_title', '紹介文', 'why', 'how', 'what', 'supporter']:
+        for key in intro_list:
             if key not in intro_dict.keys():
                 intro_dict[key] = '記載なし'
 
@@ -134,7 +138,7 @@ for key, url in companies.iterrows():
             pass
         
         # 掲載がない場合
-        for key in ['創業者', '所在地', 'チーム', '業界', 'チームの強み', 'サービスの形態', 'ローンチ', 'ラウンド', 'ステージ', '資本金', '会社名', '対象地域', '交際ステータス', '職種', '事業規模', '性別', 'その他', '個人年収', '年齢層']:
+        for key in info_list:
             if key not in info_dict.keys():
                 info_dict[key] = '記載なし'
 
